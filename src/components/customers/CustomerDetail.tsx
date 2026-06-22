@@ -181,15 +181,15 @@ export function CustomerDetail({ customer, isOpen, onClose }: CustomerDetailProp
 
       {/* Drawer/Modal */}
       <div
-        className={`fixed right-0 top-0 h-screen w-full sm:w-96 bg-background border-l border-border shadow-lg z-50 transform transition-transform duration-300 ${
+        className={`fixed right-0 top-0 h-screen w-full sm:w-96 bg-[#0B1220] border-l border-[#263043] shadow-2xl z-50 transform transition-transform duration-300 ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         } overflow-y-auto no-print`}
       >
-        <div className="sticky top-0 bg-white border-b border-[#E2E8F0] p-6 flex items-center justify-between z-10">
+        <div className="sticky top-0 bg-[#111B31] border-b border-[#263043] p-6 flex items-center justify-between z-10">
           <h2 className="text-xs font-bold text-slate-400 uppercase tracking-[0.2em]">Customer Intelligence Center</h2>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-slate-50 rounded-xl transition-colors text-slate-400 hover:text-[#0F172A]"
+            className="p-2 hover:bg-[#161F38] rounded-xl transition-colors text-slate-400 hover:text-white"
             aria-label="Close details"
           >
             <X className="h-5 w-5" />
@@ -200,13 +200,13 @@ export function CustomerDetail({ customer, isOpen, onClose }: CustomerDetailProp
           {/* Profile Identity */}
           <div className="space-y-4">
             <div>
-              <h3 className="text-3xl font-bold text-[#0F172A] tracking-tighter leading-none">{customer.name}</h3>
-              <p className="text-sm font-medium text-slate-500 mt-1">{customer.businessName}</p>
+              <h3 className="text-3xl font-bold text-white tracking-tighter leading-none">{customer.name}</h3>
+              <p className="text-sm font-medium text-slate-400 mt-1">{customer.businessName}</p>
             </div>
             <div className="flex items-center gap-4">
               <StatusBadge status={customer.status} />
-              <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                <Clock className="h-3 w-3 text-slate-400" />
+              <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                <Clock className="h-3 w-3 text-slate-500" />
                 Active since {formatDate(customer.createdAt)}
               </div>
             </div>
@@ -214,38 +214,38 @@ export function CustomerDetail({ customer, isOpen, onClose }: CustomerDetailProp
 
           {/* Executive Insights Layer */}
           <div className="grid grid-cols-1 gap-4">
-            <div className="p-4 bg-[#0F172A] rounded-2xl relative overflow-hidden shadow-xl shadow-slate-200 group transition-all hover:-translate-y-1">
-               <div className="absolute top-0 right-0 h-full w-24 bg-[#D4A017]/10 blur-2xl rounded-full" />
+            <div className="p-4 bg-[#111B31] border border-[#263043] rounded-2xl relative overflow-hidden shadow-xl shadow-black/50 group transition-all hover:-translate-y-1">
+               <div className="absolute top-0 right-0 h-full w-24 bg-[#E0B03B]/10 blur-2xl rounded-full" />
                <div className="relative z-10 flex justify-between items-center">
                  <div className="space-y-1">
-                   <p className="text-[9px] font-bold text-[#D4A017] uppercase tracking-[0.2em]">Health Status</p>
+                   <p className="text-[9px] font-bold text-[#E0B03B] uppercase tracking-[0.2em]">Health Status</p>
                    <p className="text-2xl font-bold text-white tracking-tight capitalize">{(customer as any)?.healthStatus ? (customer as any).healthStatus.replace('_', ' ') : 'Active'}</p>
                  </div>
-                 <ShieldCheck className="h-8 w-8 text-[#D4A017] opacity-40" />
+                 <ShieldCheck className="h-8 w-8 text-[#E0B03B] opacity-40" />
                </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <div className="p-4 bg-slate-50 rounded-2xl ring-1 ring-slate-100">
+              <div className="p-4 bg-[#161F38] rounded-2xl border border-[#263043]">
                 <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1">Lifetime Revenue</p>
-                <p className="text-sm font-bold text-[#0F172A] tabular-nums">
+                <p className="text-sm font-bold text-white tabular-nums">
                   {formatCurrency((customer.totalRevenue || 0))}
                 </p>
               </div>
-              <div className="p-4 bg-slate-50 rounded-2xl ring-1 ring-slate-100">
+              <div className="p-4 bg-[#161F38] rounded-2xl border border-[#263043]">
                 <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1">Outstanding Balance</p>
-                <p className="text-sm font-bold text-rose-600 tabular-nums">
+                <p className="text-sm font-bold text-[#EF4444] tabular-nums">
                   {formatCurrency(customer.outstandingBalance)}
                 </p>
               </div>
-              <div className="p-4 bg-slate-50 rounded-2xl ring-1 ring-slate-100">
+              <div className="p-4 bg-[#161F38] rounded-2xl border border-[#263043]">
                 <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1">Last Payment</p>
-                <p className="text-sm font-bold text-[#0F172A]">
+                <p className="text-sm font-bold text-white">
                   {lastPaymentDate ? formatDate(lastPaymentDate) : 'N/A'}
                 </p>
               </div>
-              <div className="p-4 bg-slate-50 rounded-2xl ring-1 ring-slate-100">
+              <div className="p-4 bg-[#161F38] rounded-2xl border border-[#263043]">
                 <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1">Payment Reliability</p>
-                <p className="text-sm font-bold text-[#0F172A]">
+                <p className="text-sm font-bold text-white">
                   {collectionPerformancePercentage}
                 </p>
                </div>

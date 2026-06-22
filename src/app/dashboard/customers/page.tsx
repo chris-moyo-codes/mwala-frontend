@@ -6,7 +6,6 @@ import { DashboardLayout } from '@/components/layout/DashboardLayout'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/shared/Card'
 import { Button } from '@/components/shared/Button'
 import { CustomerTable } from '@/components/customers/CustomerTable'
-import { SearchAndFilter } from '@/components/customers/SearchAndFilter'
 import { CustomerDetail } from '@/components/customers/CustomerDetail'
 import { mockCustomers, mockInvoices, mockReceipts } from '@/mock-data' // Added mockInvoices, mockReceipts
 import { Customer, Invoice, Receipt } from '@/types' // Added Invoice, Receipt types
@@ -153,39 +152,39 @@ export default function CustomersPage() { // Customers Page component
         {/* Page header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-4xl font-bold tracking-tight text-[#0F172A]">Customer Intelligence Center</h1>
-            <p className="text-sm text-muted-foreground mt-1">
+            <h1 className="text-3xl font-bold tracking-tight text-white">Customer Intelligence Center</h1>
+            <p className="text-slate-400 font-medium mt-1">
               Customer Relationship Intelligence for Ambitious Businesses.
             </p>
           </div>
-          <Button variant="default" className="w-full sm:w-auto flex items-center justify-center gap-2">
-            <Plus className="h-4 w-4" />
+          <Button variant="default" className="w-full sm:w-auto flex items-center justify-center gap-2 bg-[#E0B03B] hover:bg-[#c99a2c] text-[#0B1220] font-bold shadow-lg shadow-[#E0B03B]/20">
+            <Plus className="h-4 w-4 stroke-[3px]" />
             Add Customer
           </Button>
         </div>
 
         {/* SECTION 1: Executive Summary */}
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {[
             { label: 'Total Customers', value: totalCustomers, icon: Users, trend: '+3.1%', context: 'vs last month', isPositive: true },
             { label: 'Active Customers', value: activeCustomers, icon: Users, trend: '+1.5%', context: 'vs last month', isPositive: true },
-            { label: 'Outstanding Balance', value: formatCurrency(totalOutstandingBalance), icon: DollarSign, trend: null, color: 'text-slate-900' },
+            { label: 'Outstanding Balance', value: formatCurrency(totalOutstandingBalance), icon: DollarSign, trend: null, color: 'text-[#EF4444]' },
             { label: 'Growth Rate', value: customerGrowthRate, icon: TrendingUp, trend: '+5.2%', isPositive: true },
           ].map((kpi) => (
-            <Card key={kpi.label} className="border-none shadow-sm ring-1 ring-slate-100 overflow-hidden transition-all duration-300 hover:shadow-lg hover:ring-slate-200 hover:-translate-y-1 group">
+            <Card key={kpi.label} className="border-[#263043] bg-[#111B31] shadow-sm hover:border-[#E0B03B]/50 transition-all duration-300 group">
               <CardContent className="p-5">
                 <div className="flex flex-col gap-1">
-                  <p className="text-[11px] font-bold text-slate-400 uppercase tracking-[0.12em]">
+                  <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">
                     {kpi.label}
                   </p>
                   <div className="flex items-baseline gap-2 mt-1">
-                    <p className={cn("text-3xl font-bold tabular-nums tracking-tight", kpi.color || "text-[#0F172A]")}>
+                    <p className={cn("text-2xl font-bold tabular-nums tracking-tight", kpi.color || "text-white")}>
                       {kpi.value}
                     </p>
                     {kpi.trend && (
                       <span className={cn(
-                        "flex items-center text-[10px] font-bold px-1.5 py-0.5 rounded-full ring-1 ring-inset",
-                        kpi.isPositive ? "text-emerald-700 bg-emerald-50 ring-emerald-600/10" : "text-rose-700 bg-rose-50 ring-rose-600/10"
+                        "flex items-center text-[10px] font-bold px-1.5 py-0.5 rounded-full border",
+                        kpi.isPositive ? "text-[#22C55E] bg-[#22C55E]/10 border-[#22C55E]/20" : "text-[#EF4444] bg-[#EF4444]/10 border-[#EF4444]/20"
                       )}>
                         {kpi.isPositive ? <ArrowUpRight className="h-3 w-3 mr-1" /> : <ArrowDownRight className="h-3 w-3 mr-1" />}
                         {kpi.trend}
@@ -205,31 +204,25 @@ export default function CustomersPage() { // Customers Page component
             <h2 className="text-[11px] font-bold text-slate-400 uppercase tracking-[0.2em]">Customer Health Matrix</h2>
             <div className="grid grid-cols-2 gap-4">
               {[
-                { label: 'Healthy', status: 'healthy', icon: HeartHandshake, color: 'emerald', data: customerHealthMatrix.healthy },
-                { label: 'Growing', status: 'growing', icon: TrendingUp, color: 'blue', data: customerHealthMatrix.growing },
-                { label: 'At Risk', status: 'at_risk', icon: AlertCircle, color: 'rose', data: customerHealthMatrix.at_risk },
-                { label: 'Inactive', status: 'inactive', icon: Clock, color: 'slate', data: customerHealthMatrix.inactive },
+                { label: 'Healthy', status: 'healthy', icon: HeartHandshake, color: 'text-[#22C55E]', bg: 'bg-[#22C55E]/10', data: customerHealthMatrix.healthy },
+                { label: 'Growing', status: 'growing', icon: TrendingUp, color: 'text-[#3B82F6]', bg: 'bg-[#3B82F6]/10', data: customerHealthMatrix.growing },
+                { label: 'At Risk', status: 'at_risk', icon: AlertCircle, color: 'text-[#F59E0B]', bg: 'bg-[#F59E0B]/10', data: customerHealthMatrix.at_risk },
+                { label: 'Inactive', status: 'inactive', icon: Clock, color: 'text-slate-400', bg: 'bg-slate-400/10', data: customerHealthMatrix.inactive },
               ].map((health) => (
-                <Card key={health.status} className={cn(
-                  "group border-none shadow-sm ring-1 transition-all duration-200 hover:shadow-xl hover:-translate-y-1 cursor-default",
-                  health.color === 'emerald' ? "ring-emerald-100 bg-emerald-50/50 hover:ring-emerald-200" :
-                  health.color === 'blue' ? "ring-blue-100 bg-blue-50/50 hover:ring-blue-200" :
-                  health.color === 'rose' ? "ring-rose-100 bg-rose-50/50 hover:ring-rose-200" :
-                  "ring-slate-100 bg-slate-50/50 hover:ring-slate-200"
-                )}>
+                <Card key={health.status} className="border-[#263043] bg-[#111B31] shadow-sm hover:border-slate-400/50 transition-all duration-300">
                   <CardContent className="p-6 space-y-4">
                     <div className="flex items-center justify-between">
-                      <p className={cn("text-[10px] font-bold uppercase tracking-widest", `text-${health.color}-600`)}>{health.label}</p>
-                      <health.icon className={cn("h-4 w-4 text-slate-300 group-hover:text-current transition-colors", `group-hover:text-${health.color}-500`)} />
+                      <p className={cn("text-[10px] font-bold uppercase tracking-widest", health.color)}>{health.label}</p>
+                      <health.icon className={cn("h-4 w-4", health.color)} />
                     </div>
                     <div>
-                      <p className="text-3xl font-bold text-[#0F172A] tabular-nums tracking-tight">{health.data.count}</p>
+                      <p className="text-3xl font-bold text-white tabular-nums tracking-tight">{health.data.count}</p>
                       <div className="flex items-center gap-1.5 mt-1">
-                        <span className="text-[10px] text-slate-500 font-medium">
-                          {formatCurrency(health.data.revenue)} Revenue
+                        <span className="text-[10px] text-slate-400 font-medium">
+                          {formatCurrency(health.data.revenue)} Rev
                         </span>
                         <span className="text-[10px] text-slate-500 font-medium">•</span>
-                        <span className="text-[10px] text-slate-500 font-medium">
+                        <span className="text-[10px] text-slate-400 font-medium">
                           {health.data.performance.toFixed(0)}% Perf.
                         </span>
                       </div>
@@ -243,27 +236,27 @@ export default function CustomersPage() { // Customers Page component
           {/* SECTION 7: MWALA Intelligence */}
           <div className="lg:col-span-5 space-y-6">
             <h2 className="text-[11px] font-bold text-slate-400 uppercase tracking-[0.2em]">MWALA Intelligence</h2>
-            <Card className="border-none bg-[#0F172A] text-white overflow-hidden relative shadow-2xl group cursor-default">
-              <div className="absolute top-0 right-0 h-48 w-48 bg-[#D4A017]/10 blur-[100px] rounded-full transition-opacity group-hover:opacity-100 opacity-60" />
+            <Card className="border-[#263043] bg-[#111B31] text-white overflow-hidden relative shadow-2xl group cursor-default">
+              <div className="absolute top-0 right-0 h-48 w-48 bg-[#E0B03B]/10 blur-[100px] rounded-full transition-opacity group-hover:opacity-100 opacity-60" />
               <CardContent className="p-8 space-y-8 relative z-10">
                 {mwalaIntelligenceInsights.map((insight) => (
                   <div key={insight.id} className="space-y-2 group">
                     <div className="flex items-center gap-2">
-                      <Zap className="h-3 w-3 text-[#D4A017]" />
-                      <p className="text-[9px] font-bold text-[#D4A017] uppercase tracking-[0.25em]">Strategic Insight</p>
+                      <Zap className="h-3 w-3 text-[#E0B03B]" />
+                      <p className="text-[9px] font-bold text-[#E0B03B] uppercase tracking-[0.25em]">Strategic Insight</p>
                     </div>
                     <p className="text-lg font-medium leading-snug text-white">
                       {insight.text}
                     </p>
                     {insight.subtext && <p className="text-sm text-slate-400">{insight.subtext}</p>}
                     {insight.actionLabel && insight.actionHref && (
-                      <Link href={insight.actionHref} className="inline-flex items-center gap-1 text-xs font-bold text-[#D4A017] hover:text-white transition-colors mt-2">
+                      <Link href={insight.actionHref} className="inline-flex items-center gap-1 text-xs font-bold text-[#E0B03B] hover:text-white transition-colors mt-2">
                         {insight.actionLabel} <ChevronRight className="h-3 w-3" />
                       </Link>
                     )}
                   </div>
                 ))}
-                <Button variant="accent" className="w-full text-[10px] h-12 uppercase tracking-widest font-bold bg-[#D4A017] hover:bg-[#b88a14] text-[#0F172A] border-none">
+                <Button variant="secondary" className="w-full text-[10px] h-12 uppercase tracking-widest font-bold bg-[#161F38] hover:bg-[#263043] text-white border-none">
                   View Customer Strategy Report
                 </Button>
               </CardContent>
@@ -276,22 +269,22 @@ export default function CustomersPage() { // Customers Page component
           {/* Top Revenue Contributors */}
           <div className="lg:col-span-6 space-y-6">
             <h2 className="text-[11px] font-bold text-slate-400 uppercase tracking-[0.2em]">Top Revenue Contributors</h2>
-            <Card className="border-none shadow-sm ring-1 ring-slate-100 overflow-hidden">
-              <div className="divide-y divide-slate-50">
+            <Card className="border-[#263043] bg-[#111B31] shadow-sm overflow-hidden">
+              <div className="divide-y divide-[#263043]">
                 {topRevenueContributors.map((customer) => (
-                  <div key={customer.id} className="flex items-center justify-between p-4 hover:bg-slate-50 transition-all cursor-pointer group" onClick={() => handleRowClick(customer)}>
+                  <div key={customer.id} className="flex items-center justify-between p-4 hover:bg-[#161F38] transition-all cursor-pointer group" onClick={() => handleRowClick(customer)}>
                     <div className="flex items-center gap-4">
-                      <div className="h-9 w-9 rounded-lg bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-[#0F172A] group-hover:text-white transition-all duration-300">
+                      <div className="h-9 w-9 rounded-lg bg-[#161F38] border border-[#263043] flex items-center justify-center text-slate-400 group-hover:bg-[#E0B03B] group-hover:text-[#0B1220] transition-all duration-300">
                         <Users className="h-4 w-4" />
                       </div>
                       <div>
-                        <p className="text-sm font-bold text-[#0F172A] group-hover:text-black">{customer.name}</p>
-                        <p className="text-[10px] text-slate-500">{customer.businessName}</p>
+                        <p className="text-sm font-bold text-white group-hover:text-[#E0B03B]">{customer.name}</p>
+                        <p className="text-[10px] text-slate-400">{customer.businessName}</p>
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-bold text-emerald-600 tabular-nums">{formatCurrency(customer.totalRevenue)}</p>
-                      <p className="text-[10px] text-slate-400 uppercase font-bold mt-0.5">{customer.industry}</p>
+                      <p className="text-sm font-bold text-[#22C55E] tabular-nums">{formatCurrency(customer.totalRevenue)}</p>
+                      <p className="text-[10px] text-slate-500 uppercase font-bold mt-0.5">{customer.industry}</p>
                     </div>
                   </div>
                 ))}
@@ -308,26 +301,26 @@ export default function CustomersPage() { // Customers Page component
                   key={customer.id}
                   className={cn(
                     "flex items-center justify-between p-4 rounded-xl border transition-all cursor-pointer group",
-                    customer.healthStatus === 'at_risk' ? "bg-rose-50/20 border-rose-100 hover:border-rose-300" : "bg-amber-50/20 border-amber-100 hover:border-amber-300"
+                    customer.healthStatus === 'at_risk' ? "bg-[#EF4444]/10 border-[#EF4444]/20 hover:border-[#EF4444]/50" : "bg-[#F59E0B]/10 border-[#F59E0B]/20 hover:border-[#F59E0B]/50"
                   )}
                   onClick={() => handleRowClick(customer)}
                 >
                   <div className="flex items-center gap-4">
                     <div className={cn(
                       "h-9 w-9 rounded-lg flex items-center justify-center transition-transform group-hover:scale-110",
-                      customer.healthStatus === 'at_risk' ? "bg-rose-100 text-rose-600" : "bg-amber-100 text-amber-600"
+                      customer.healthStatus === 'at_risk' ? "bg-[#EF4444]/20 text-[#EF4444]" : "bg-[#F59E0B]/20 text-[#F59E0B]"
                     )}>
                       <AlertCircle className="h-4 w-4" />
                     </div>
                     <div>
-                      <p className="text-sm font-bold text-[#0F172A] group-hover:text-black">{customer.name}</p>
-                      <p className="text-[9px] uppercase font-bold tracking-[0.15em] mt-0.5">
+                      <p className="text-sm font-bold text-white group-hover:text-slate-300">{customer.name}</p>
+                      <p className="text-[9px] uppercase font-bold tracking-[0.15em] mt-0.5 text-slate-400">
                         {customer.healthStatus === 'at_risk' ? 'At Risk' : 'Pending Action'} • {formatCurrency(customer.outstandingBalance)}
                       </p>
                     </div>
                   </div>
                   <div className="text-right flex items-center gap-6">
-                    <ChevronRight className="h-4 w-4 text-slate-300 group-hover:translate-x-1 transition-transform group-hover:text-[#0F172A]" />
+                    <ChevronRight className="h-4 w-4 text-slate-500 group-hover:translate-x-1 transition-transform group-hover:text-white" />
                   </div>
                 </div>
               )) : (
@@ -340,50 +333,31 @@ export default function CustomersPage() { // Customers Page component
         </div>
 
         {/* SECTION 3: Customer Directory */}
-        <Card className="border-none shadow-sm ring-1 ring-slate-100 overflow-hidden">
-          <CardHeader className="bg-slate-50/50 pb-4 border-b border-slate-100">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-              <div className="space-y-2">
-                <CardTitle className="text-[11px] font-bold text-slate-400 uppercase tracking-[0.1em]">Customer Directory</CardTitle>
-                <p className="text-xs text-muted-foreground">
-                  Showing {filteredCustomers.length} entries
-                </p>
-              </div>
-              <div className="w-full md:w-auto flex-shrink-0">
-                <SearchAndFilter
-                  searchValue={searchTerm}
-                  onSearchChange={setSearchTerm}
-                  filterStatus={filterStatus}
-                  onFilterChange={setFilterStatus}
-                />
-              </div>
-            </div>
-          </CardHeader>
-          <CardContent className="px-0">
-            {filteredCustomers.length > 0 ? (
-              <CustomerTable
-                customers={filteredCustomers}
-                onRowClick={handleRowClick}
-                selectedCustomerId={selectedCustomer?.id}
-              />
-            ) : (
-              <div className="py-20 text-center space-y-4">
-                <p className="text-lg font-semibold text-[#0F172A]">Strong businesses are built on strong customer relationships.</p>
-                <p className="text-sm text-slate-500 max-w-sm mx-auto">
-                  Start by adding your first customer to begin building your intelligence.
-                </p>
-                <Button variant="default" className="shadow-lg shadow-slate-200 px-6">
-                  <Plus className="h-4 w-4 stroke-[3px] mr-2" /> Add First Customer
+        <div className="pt-4">
+          <h2 className="text-[11px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-6">Customer Directory</h2>
+          {filteredCustomers.length > 0 ? (
+            <CustomerTable
+              customers={filteredCustomers}
+              onRowClick={handleRowClick}
+              selectedCustomerId={selectedCustomer?.id}
+            />
+          ) : (
+            <div className="py-20 text-center space-y-4">
+              <p className="text-lg font-semibold text-white">Strong businesses are built on strong customer relationships.</p>
+              <p className="text-sm text-slate-400 max-w-sm mx-auto">
+                Start by adding your first customer to begin building your intelligence.
+              </p>
+              <Button variant="default" className="bg-[#E0B03B] hover:bg-[#c99a2c] text-[#0B1220] font-bold shadow-lg shadow-[#E0B03B]/20 px-6">
+                <Plus className="h-4 w-4 stroke-[3px] mr-2" /> Add First Customer
+              </Button>
+              {searchTerm || filterStatus !== 'all' ? (
+                <Button variant="ghost" onClick={() => { setSearchTerm(''); setFilterStatus('all'); }}>
+                  Clear all filters
                 </Button>
-                {searchTerm || filterStatus !== 'all' ? (
-                  <Button variant="ghost" onClick={() => { setSearchTerm(''); setFilterStatus('all'); }}>
-                    Clear all filters
-                  </Button>
-                ) : null}
-              </div>
-            )}
-          </CardContent>
-        </Card>
+              ) : null}
+            </div>
+          )}
+        </div>
         </div>
 
         {/* SECTION 4: Customer Profile Split View */}
