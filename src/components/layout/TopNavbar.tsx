@@ -16,7 +16,7 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/shared/Button'
 import { toast } from 'react-toastify'
-import { GlobalSearch } from './GlobalSearch'
+import { CommandPalette } from '../shared/CommandPalette'
 import { NotificationCenter, notificationIcons, notificationColors } from './NotificationCenter'
 
 // Corrected absolute path alias to the single canonical source of truth
@@ -98,7 +98,7 @@ export function TopNavbar({ title }: TopNavbarProps) {
   }
 
   return (
-    <header className="border-b border-[#E2E8F0] bg-white sticky top-0 z-30">
+    <header className="border-b border-slate-100 bg-white sticky top-0 z-30">
       <div className="flex h-16 items-center justify-between px-4 lg:px-6">
         <div className="flex-1">
           {title && <h2 className="text-lg font-semibold text-[#0F172A]">{title}</h2>}
@@ -113,7 +113,7 @@ export function TopNavbar({ title }: TopNavbarProps) {
             >
               <Search className="h-4 w-4 text-slate-400" />
               <span className="text-slate-400">Search...</span>
-              <span className="ml-4 text-xs text-slate-400 hidden lg:inline-flex items-center gap-1">
+              <span className="ml-4 text-xs text-slate-400 hidden lg:inline-flex items-center gap-1 bg-white border border-slate-200 px-1.5 py-0.5 rounded shadow-sm">
                 <Command className="h-3 w-3" />K
               </span>
             </button>
@@ -152,8 +152,8 @@ export function TopNavbar({ title }: TopNavbarProps) {
             {showUserMenu && (
               <>
                 <div className="fixed inset-0 z-40" onClick={() => setShowUserMenu(false)} />
-                <div className="absolute right-0 mt-2 w-52 rounded-xl border border-[#E2E8F0] bg-white shadow-xl shadow-slate-200/50 z-50 overflow-hidden">
-                  <div className="p-4 border-b border-[#E2E8F0] bg-slate-50/50">
+                <div className="absolute right-0 mt-2 w-52 rounded-xl border border-slate-100 bg-white shadow-xl shadow-slate-200/50 z-50 overflow-hidden">
+                  <div className="p-4 border-b border-slate-100 bg-slate-50/50">
                     <p className="text-sm font-bold text-[#0F172A]">{user?.name}</p>
                     <p className="text-xs text-slate-500 truncate">{user?.email}</p>
                   </div>
@@ -197,7 +197,7 @@ export function TopNavbar({ title }: TopNavbarProps) {
       </div>
 
       {/* Overlays/Modals */}
-      <GlobalSearch
+      <CommandPalette
         isOpen={isSearchOpen}
         onClose={() => setIsSearchOpen(false)}
       />
