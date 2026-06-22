@@ -151,7 +151,7 @@ function HeroSection() {
 
         {/* Headline */}
         <h1 className="animate-fade-up-delay-1 opacity-0 text-5xl sm:text-6xl md:text-7xl lg:text-[88px] font-black tracking-[-0.04em] leading-[0.95] text-white mb-8">
-          Run your business<br />
+          Build your business<br />
           <span className="gradient-text-gold">on solid ground.</span>
         </h1>
 
