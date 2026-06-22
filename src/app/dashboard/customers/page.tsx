@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/shared/Ca
 import { Button } from '@/components/shared/Button'
 import { CustomerTable } from '@/components/customers/CustomerTable'
 import { CustomerDetail } from '@/components/customers/CustomerDetail'
+import { EmptyState } from '@/components/shared/EmptyState'
 import { mockCustomers, mockInvoices, mockReceipts } from '@/mock-data' // Added mockInvoices, mockReceipts
 import { Customer, Invoice, Receipt } from '@/types' // Added Invoice, Receipt types
 import { Plus, Users, TrendingUp, DollarSign, ArrowUpRight, ArrowDownRight, AlertCircle, HeartHandshake, Zap, ChevronRight, Clock } from 'lucide-react' // Added AlertCircle, HeartHandshake, Zap, ChevronRight, Clock
@@ -324,8 +325,13 @@ export default function CustomersPage() { // Customers Page component
                   </div>
                 </div>
               )) : (
-                <div className="p-6 text-center text-slate-500 italic">
-                  No customers currently require special attention.
+                <div className="py-6">
+                  <EmptyState
+                    icon={AlertCircle}
+                    title="All Clear"
+                    description="No customers currently require special attention."
+                    className="py-4"
+                  />
                 </div>
               )}
             </div>
@@ -342,20 +348,22 @@ export default function CustomersPage() { // Customers Page component
               selectedCustomerId={selectedCustomer?.id}
             />
           ) : (
-            <div className="py-20 text-center space-y-4">
-              <p className="text-lg font-semibold text-white">Strong businesses are built on strong customer relationships.</p>
-              <p className="text-sm text-slate-400 max-w-sm mx-auto">
-                Start by adding your first customer to begin building your intelligence.
-              </p>
-              <Button variant="default" className="bg-[#E0B03B] hover:bg-[#c99a2c] text-[#0B1220] font-bold shadow-lg shadow-[#E0B03B]/20 px-6">
-                <Plus className="h-4 w-4 stroke-[3px] mr-2" /> Add First Customer
-              </Button>
-              {searchTerm || filterStatus !== 'all' ? (
-                <Button variant="ghost" onClick={() => { setSearchTerm(''); setFilterStatus('all'); }}>
-                  Clear all filters
-                </Button>
-              ) : null}
-            </div>
+            <EmptyState
+              icon={Users}
+              title="Customer Directory"
+              description="Strong businesses are built on strong customer relationships. Start by adding your first customer to begin building your intelligence."
+              primaryAction={{
+                label: "Add First Customer",
+                onClick: () => {}
+              }}
+              secondaryAction={
+                (searchTerm || filterStatus !== 'all') ? {
+                  label: "Clear all filters",
+                  onClick: () => { setSearchTerm(''); setFilterStatus('all'); }
+                } : undefined
+              }
+              className="py-20"
+            />
           )}
         </div>
         </div>

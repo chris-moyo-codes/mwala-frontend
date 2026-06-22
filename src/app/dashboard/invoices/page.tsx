@@ -6,9 +6,10 @@ import { Button } from '@/components/shared/Button'
 import { InvoiceTable } from '@/components/invoices/InvoiceTable'
 import { InvoiceSearchAndFilter } from '@/components/invoices/InvoiceSearchAndFilter'
 import { InvoiceDetail } from '@/components/invoices/InvoiceDetail'
+import { EmptyState } from '@/components/shared/EmptyState'
 import { mockInvoices } from '@/mock-data'
 import { Invoice } from '@/types'
-import { Plus } from 'lucide-react'
+import { Plus, SearchX } from 'lucide-react'
 
 export default function InvoicesPage() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -71,9 +72,19 @@ export default function InvoicesPage() {
                   onRowClick={handleRowClick}
                 />
               ) : (
-                <div className="py-12 text-center text-muted-foreground">
-                  No invoices found. Try adjusting your search or filters.
-                </div>
+                <EmptyState
+                  icon={SearchX}
+                  title="No Invoices Found"
+                  description="We couldn't find any invoices matching your current filters. Try adjusting your search term or status filter."
+                  primaryAction={{
+                    label: "Clear Filters",
+                    onClick: () => {
+                      setSearchTerm('')
+                      setFilterStatus('all')
+                    }
+                  }}
+                  className="py-12"
+                />
               )}
             </div>
           </CardContent>

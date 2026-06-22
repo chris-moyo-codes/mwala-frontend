@@ -7,10 +7,11 @@ import { Button } from '@/components/shared/Button'
 import { ReceiptTable } from '@/components/receipts/ReceiptTable'
 import { ReceiptSearchAndFilter } from '@/components/receipts/ReceiptSearchAndFilter'
 import { ReceiptDetail } from '@/components/receipts/ReceiptDetail'
+import { EmptyState } from '@/components/shared/EmptyState'
 import { mockReceipts } from '@/mock-data'
 import { Receipt } from '@/types'
 import { formatCurrency } from '@/lib/utils'
-import { Plus } from 'lucide-react'
+import { Plus, SearchX } from 'lucide-react'
 
 export default function ReceiptsPage() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -127,10 +128,26 @@ export default function ReceiptsPage() {
             </CardTitle>
           </CardHeader>
           <CardContent className="px-0">
-            <ReceiptTable
-              receipts={filteredReceipts}
-              onRowClick={handleRowClick}
-            />
+            {filteredReceipts.length > 0 ? (
+              <ReceiptTable
+                receipts={filteredReceipts}
+                onRowClick={handleRowClick}
+              />
+            ) : (
+              <EmptyState
+                icon={SearchX}
+                title="No Receipts Found"
+                description="We couldn't find any receipts matching your current filters. Try adjusting your search term or status filter."
+                primaryAction={{
+                  label: "Clear Filters",
+                  onClick: () => {
+                    setSearchTerm('')
+                    setFilterStatus('all')
+                  }
+                }}
+                className="py-12"
+              />
+            )}
           </CardContent>
         </Card>
       </div>
