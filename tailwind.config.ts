@@ -10,30 +10,36 @@ const config = {
   theme: {
     extend: {
       colors: {
-        // Mwala Earth Tone Palette
-        cream: "#F5F1ED",
-        beige: "#A89968",
-        khaki: "#B8956A",
-        "british-khaki": "#9B8B6B",
+        // Institutional Dark Palette
+        background: "#0B1220",
+        surface: "#111B31",
+        "elevated-surface": "#161F38",
+        border: "#263043",
+        
+        // Typography
+        foreground: "#F8FAFC",
+        "muted-foreground": "#94A3B8",
+        
+        // Brand & Accents
+        "accent-gold": "#E0B03B",
+        success: "#22C55E",
+        warning: "#F59E0B",
+        danger: "#EF4444",
 
-        // Utility colors
-        foreground: "#1a1a1a",
-        background: "#ffffff",
-        card: "#f9f9f9",
-        "card-foreground": "#1a1a1a",
-        primary: "#9B8B6B",
-        "primary-foreground": "#ffffff",
-        secondary: "#A89968",
-        "secondary-foreground": "#ffffff",
-        muted: "#9CA3AF",
-        "muted-foreground": "#6B7280",
-        accent: "#B8956A",
-        "accent-foreground": "#ffffff",
+        // Map shadcn/ui defaults to institutional palette
+        card: "#111B31",
+        "card-foreground": "#F8FAFC",
+        primary: "#E0B03B",
+        "primary-foreground": "#0B1220",
+        secondary: "#161F38",
+        "secondary-foreground": "#F8FAFC",
+        muted: "#161F38",
+        accent: "#161F38",
+        "accent-foreground": "#F8FAFC",
         destructive: "#EF4444",
-        "destructive-foreground": "#ffffff",
-        border: "#E5E7EB",
-        input: "#E5E7EB",
-        ring: "#9B8B6B",
+        "destructive-foreground": "#F8FAFC",
+        input: "#263043",
+        ring: "#E0B03B",
       },
       borderRadius: {
         lg: "0.5rem",

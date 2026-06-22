@@ -5,11 +5,13 @@
 @tailwind utilities;
 
 :root {
-  --mwala-dark: #0a0e1a;
-  --mwala-charcoal: #0F172A;
-  --mwala-gold: #D4A017;
-  --mwala-emerald: #10b981;
-  --mwala-slate: #94a3b8;
+  --mwala-dark: #0B1220;
+  --mwala-charcoal: #111B31;
+  --mwala-gold: #E0B03B;
+  --mwala-emerald: #22C55E;
+  --mwala-slate: #94A3B8;
+  --mwala-elevated: #161F38;
+  --mwala-border: #263043;
 }
 
 * {
