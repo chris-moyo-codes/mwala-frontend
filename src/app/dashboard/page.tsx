@@ -4,19 +4,25 @@ import React, { useState } from 'react'
 import { DashboardLayout } from '@/components/layout/DashboardLayout'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/shared/Card'
 import { Button } from '@/components/shared/Button'
+import { InsightsSidebar, DEFAULT_INSIGHTS } from '@/components/shared/InsightsSidebar'
+import { OnboardingTracker } from '@/components/shared/OnboardingTracker'
 import { 
   ArrowUpRight, 
   ArrowDownRight,
   Plus, 
   Users,
   TrendingUp, 
-  Clock, 
-  CheckCircle2,
+  Clock,
   Wallet,
   Activity,
   Zap,
   MoreVertical,
-  Bell
+  Bell,
+  Sparkles,
+  UserPlus,
+  FileText,
+  Receipt,
+  Building2
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import {
@@ -26,9 +32,7 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  ResponsiveContainer,
-  BarChart,
-  Bar
+  ResponsiveContainer
 } from 'recharts'
 
 // ─── Mock Data ──────────────────────────────────────────────────────────────
@@ -101,9 +105,21 @@ function GaugeChart({ value }: { value: number }) {
   )
 }
 
+// ─── Onboarding Steps Data ────────────────────────────────────────────────────
+const ONBOARDING_STEPS = [
+  { id: 'profile', title: 'Complete Business Profile', description: 'Add your business name, logo, and contact details.', completed: true, ctaLabel: 'Done' },
+  { id: 'customer', title: 'Add Your First Customer', description: 'Start building your customer intelligence directory.', completed: true, ctaLabel: 'Done' },
+  { id: 'invoice', title: 'Create Your First Invoice', description: 'Issue a professional invoice to a customer.', completed: false, href: '/dashboard/invoices/new', ctaLabel: 'Create' },
+  { id: 'payment', title: 'Record a Payment', description: 'Log an incoming payment and generate a receipt.', completed: false, href: '/dashboard/receipts/new', ctaLabel: 'Record' },
+  { id: 'report', title: 'Generate a Financial Report', description: 'Get a full view of your business health score.', completed: false, href: '/dashboard/reports', ctaLabel: 'View' },
+]
+
 // ─── Main Page ───────────────────────────────────────────────────────────────
 
 export default function CommandCenterPage() {
+  const [isInsightsOpen, setIsInsightsOpen] = useState(false)
+  const [showOnboarding, setShowOnboarding] = useState(true)
+
   return (
     <DashboardLayout title="Command Center">
       <div className="max-w-[1600px] mx-auto space-y-8 px-4 sm:px-6 pb-12">
@@ -119,8 +135,13 @@ export default function CommandCenterPage() {
             </p>
           </div>
           <div className="flex items-center gap-3">
-            <Button variant="secondary" className="bg-[#161F38] text-white hover:bg-[#263043] border-none shadow-sm">
-              Generate Report
+            <Button
+              variant="secondary"
+              className="bg-[#161F38] text-white hover:bg-[#263043] border-none shadow-sm gap-2"
+              onClick={() => setIsInsightsOpen(true)}
+            >
+              <Sparkles className="h-4 w-4 text-[#E0B03B]" />
+              AI Insights
             </Button>
             <Button variant="default" className="bg-[#E0B03B] hover:bg-[#c99a2c] text-[#0B1220] font-bold shadow-lg shadow-[#E0B03B]/20 gap-2">
               <Plus className="h-4 w-4 stroke-[3px]" />
@@ -128,6 +149,14 @@ export default function CommandCenterPage() {
             </Button>
           </div>
         </div>
+
+        {/* Onboarding Tracker */}
+        {showOnboarding && (
+          <OnboardingTracker
+            steps={ONBOARDING_STEPS}
+            onDismiss={() => setShowOnboarding(false)}
+          />
+        )}
 
         {/* 1. Executive KPI Row */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -303,6 +332,13 @@ export default function CommandCenterPage() {
         </div>
 
       </div>
+
+      {/* AI Insights Sidebar */}
+      <InsightsSidebar
+        insights={DEFAULT_INSIGHTS}
+        isOpen={isInsightsOpen}
+        onClose={() => setIsInsightsOpen(false)}
+      />
     </DashboardLayout>
   )
 }
